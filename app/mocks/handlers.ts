@@ -54,3 +54,17 @@ export const handlers = [
         return HttpResponse.json(movies);
     }),
 ];
+
+http.get("https://api.example.com/movies/:slug", ({ params }) => {
+    const { slug } = params;
+
+    const index = movies.indexOf(slug);
+    if (index === -1) {
+        return new HttpResponse("Not found.", { status: 404 });
+    }
+    return HttpResponse.json(movies[index]);
+});
+
+http.get('/api/recommendations', () => {
+    return HttpResponse.json(movies.slice(0, 2));
+});
